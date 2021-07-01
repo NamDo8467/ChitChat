@@ -1,0 +1,52 @@
+.messageContainer {
+  scroll-behavior: smooth;
+}
+
+.whiteBg {
+  display: flex;
+  justify-content: flex-end;
+}
+.whiteUser {
+  font-size: small;
+  align-self: center;
+  margin-right: 5px;
+}
+.whiteMessage {
+  background-color: white;
+  border-radius: 5px;
+  padding: 8px 0px;
+  width: 130px;
+  text-align: center;
+  word-wrap: break-word;
+  font-size: larger;
+  margin-top: 10px;
+}
+
+.blueBg {
+  display: flex;
+  word-wrap: break-word;
+}
+.blueUser {
+  font-size: small;
+  align-self: center;
+  margin-right: 5px;
+}
+.blueMessage {
+  background-color: #007bff;
+  border-radius: 5px;
+  padding: 8px 0px;
+  color: white;
+  width: 130px;
+  text-align: center;
+  word-wrap: break-word;
+  font-size: larger;
+  margin-top: 10px;
+}
+@media screen and (max-width: 480px) {
+  .whiteMessage,
+  .blueMessage {
+    font-size: medium;
+    width: 85px;
+    padding: 3px, 0;
+  }
+}

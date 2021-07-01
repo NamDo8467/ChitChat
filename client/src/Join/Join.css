@@ -1,0 +1,84 @@
+body {
+  /* background: -webkit-linear-gradient(to right, #a1c4fd, #c2e9fb);
+  background: linear-gradient(to right, #a1c4fd, #c2e9fb); */
+
+  background: linear-gradient(
+    90deg,
+    rgba(117, 84, 160, 1) 7%,
+    rgba(117, 84, 160, 1) 17%,
+    rgba(106, 95, 168, 1) 29%,
+    rgba(99, 103, 174, 1) 44%,
+    rgba(87, 116, 184, 1) 66%,
+    rgba(70, 135, 198, 1) 83%,
+    rgba(44, 163, 219, 1) 96%,
+    rgba(22, 188, 237, 1) 100%,
+    rgba(0, 212, 255, 1) 100%
+  );
+}
+form {
+  height: 55vh;
+  width: 60vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  /* background-color: white; */
+  margin: 5% auto;
+  /* box-shadow: 0 4px 20px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19); */
+}
+
+h1 {
+  color: rgb(35, 40, 45);
+}
+input {
+  height: 30px;
+  width: 250px;
+  font-size: large;
+}
+
+select {
+  height: 35px;
+  width: 255px;
+  margin: 20px 0;
+  font-size: large;
+}
+
+.button {
+  width: 150px;
+  color: rgba(0, 0, 0, 0.507);
+  text-align: center;
+  text-decoration: none;
+  padding: 5px 0;
+  font-size: x-large;
+  border: 2px solid rgba(0, 0, 0, 0.288);
+  border-radius: 3px;
+}
+.button:hover {
+  cursor: pointer;
+  background-color: #007bff;
+  border: 2px solid #007bff;
+
+  color: white;
+  transition: background-color 0.3s ease-in-out, color 0.1s ease-in-out;
+}
+
+@media screen and (max-width: 480px) {
+  form {
+    width: 90%;
+    margin-top: 40%;
+  }
+  input {
+    font-size: medium;
+    width: 200px;
+    height: 30px;
+  }
+  select {
+    height: 25px;
+    width: 200px;
+    font-size: small;
+  }
+  .button {
+    font-size: large;
+    padding: 3px 0;
+  }
+}
