@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { io } from "socket.io-client";
 import queryString from "query-string";
 import Messages from "../Messages/Messages";
+import { useAuth } from "../Auth/Auth";
 
 import ChatRoomInfo from "../ChatRoomInfo/ChatRoomInfo";
 
@@ -16,7 +17,9 @@ function Chat({ location }) {
   const [room, setRoom] = useState("");
   const [usersInRoom, setUsersInRoom] = useState([]);
 
-  const ENDPOINT = "https://chitchat1app.herokuapp.com/";
+  const { signOut } = useAuth();
+
+  const ENDPOINT = "localhost:5500";
 
   useEffect(() => {
     const { name, room } = queryString.parse(location.search, {
@@ -41,6 +44,23 @@ function Chat({ location }) {
       setUsersInRoom(users);
     });
   }, [messages]);
+
+  // useEffect(async () => {
+  //   const documentID = "xmQmBOFfPxKbuUtM5gWc";
+  //   const docReference = doc(db, "users", documentID);
+  //   // console.log(docReference);
+  //   const snapshot = await getDoc(docReference);
+  //   if (snapshot) {
+  //     // console.log(snapshot);
+  //     const data = snapshot.data();
+  //     // console.log(data);
+  //   } else {
+  //     console.log("no doc");
+  //   }
+  //   return function () {
+  //     snapshot = "";
+  //   };
+  // }, []);
   const sendMessage = (event) => {
     event.preventDefault();
     if (message) {
@@ -52,6 +72,11 @@ function Chat({ location }) {
     <div style={{ display: "flex", justifyContent: "space-around" }}>
       <div className="chatRoomInfo">
         <ChatRoomInfo room={room} users={usersInRoom} />
+      </div>
+      <div>
+        <button type="submit" onClick={signOut}>
+          Sign Out
+        </button>
       </div>
       <div className="chatContainer">
         <div className="chatMessages">
