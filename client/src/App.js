@@ -1,16 +1,20 @@
 import React from "react";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import Join from "./Join/Join";
+import Register from "./Register/Register";
 import Chat from "./Chat/Chat";
+import ProtectedRoute from "./ProtectedRoute";
+import { AuthProvider } from "./Auth/Auth";
 
 function App() {
-  
-
   return (
-    <Router>
-      <Route exact path="/" component={Join} />
-      <Route path="/chat"component={Chat} />
-    </Router>
+    <AuthProvider>
+      <Router>
+        <Route exact path="/" component={Register} />
+        <Route path="/join" component={Join} />
+        <ProtectedRoute exact path="/chat" component={Chat} />
+      </Router>
+    </AuthProvider>
   );
 }
 
