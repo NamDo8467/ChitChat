@@ -10,8 +10,8 @@ function App() {
   return (
     <AuthProvider>
       <Router>
-        <Route exact path="/" component={Register} />
-        <Route path="/join" component={Join} />
+        <Route exact path="/" component={Join} />
+        <Route path="/register" component={Register} />
         <ProtectedRoute exact path="/chat" component={Chat} />
       </Router>
     </AuthProvider>
