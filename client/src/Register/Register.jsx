@@ -1,30 +1,52 @@
 import React, { useState } from "react";
-import { db, collection, addDoc } from "../firebase";
+import {
+  auth,
+  db,
+  doc,
+  setDoc,
+  createUserWithEmailAndPassword,
+} from "../firebase";
 function Register(props) {
-  console.log(props);
+  // console.log(props);
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
 
   const handleRegister = async () => {
-    if (name == "" || password == "") {
+    if (name === "" || password === "") {
       setError("Please enter name and password");
     } else {
       setError("");
-      setName("");
-      setPassword("");
-      const collectionRef = collection(db, "users");
-      await addDoc(collectionRef, {
-        name: name,
-        password: password,
-        google_login: false,
-        email: "",
-        id: "",
-        my_message: [],
-        other_users: [{ messages: [], user_id: "" }],
-        room: [],
-      });
-      window.location.replace("/join");
+      try {
+        const response = await createUserWithEmailAndPassword(
+          auth,
+          name,
+          password
+        );
+        const collectionRef = doc(db, "users", response.user.uid);
+        await setDoc(
+          collectionRef,
+          {
+            email: response.user.email,
+            name: "",
+            password: password,
+            google_login: false,
+            id: response.user.uid,
+            my_message: [],
+            other_users: [{ messages: [], user_id: "" }],
+            room: [],
+          },
+          { merge: true }
+        );
+        setError("");
+        setName("");
+        setPassword("");
+        window.location.replace("/");
+        // console.log(response.user);
+      } catch (error) {
+        setError(error.message);
+        console.log(error.message);
+      }
     }
   };
 
@@ -55,6 +77,9 @@ function Register(props) {
 
       <a className="button" type="submit" onClick={handleRegister}>
         Register
+      </a>
+      <a className="button" type="submit" href="/">
+        Join
       </a>
     </form>
   );
