@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import { useAuth } from "../Auth/Auth";
 import "./Join.css";
@@ -6,29 +6,46 @@ import "./Join.css";
 function Join({ location }) {
   const [name, setName] = useState("");
   const [room, setRoom] = useState("Javascript");
-  const [password, setPassword] = useState("")
+  const [error, setError] = useState("");
+  const [password, setPassword] = useState("");
   // const { currentUser, signInWithGoogle} = useContext(AuthContext)
-  const { currentUser, signInWithGoogle } = useAuth();
+  const { currentUser, signInWithGoogle, signIn } = useAuth();
 
   let history = useHistory();
-  const handleJoin = (e) => {
-    if (!name || !room) {
-      e.preventDefault();
-    } else {
-      history.push(`/chat?name=${name}&room=${room}`);
-    }
-  };
+  // const handleJoin = (e) => {
+  //   if (!name || !room) {
+  //     e.preventDefault();
+  //   } else {
+  //     history.push(`/chat?name=${name}&room=${room}`);
+  //   }
+  // };
+
+  // const signIn = async () => {
+  //   try {
+  //     const response = await signInWithEmailAndPassword(auth, name, password);
+  //     console.log(response);
+  //     setError("");
+  //     setName("");
+  //     setPassword("");
+  //   } catch (error) {
+  //     console.log(error.message);
+  //     console.log(error.code);
+  //     setError(error.code);
+  //   }
+  // };
   useEffect(() => {
     if (currentUser) {
+      // console.log(currentUser);
       history.push(`/chat?name=${currentUser}&room=${room}`);
     }
-  }, [currentUser]);
+  }, [currentUser, history]);
 
   return (
     <form>
       <div className="greeting">
         <h1>Welcome to ChitChat</h1>
       </div>
+      <div className="nameInput">{error}</div>
       <div className="nameInput">
         <input
           type="text"
@@ -61,9 +78,16 @@ function Join({ location }) {
           <option value="Ruby">Ruby</option>
         </select>
       </div>
-      <a className="button" type="submit" onClick={handleJoin}>
+      <a
+        className="button"
+        type="submit"
+        onClick={(e) => {
+          signIn(name, password, room, setName, setPassword, setError);
+        }}
+      >
         JOIN
       </a>
+      <a href="/register">Register</a>
       <button type="submit" onClick={signInWithGoogle}>
         Sign In with Google
       </button>
