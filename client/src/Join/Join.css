@@ -22,18 +22,33 @@ form {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  /* background-color: white; */
   margin: 5% auto;
-  /* box-shadow: 0 4px 20px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19); */
 }
 
 h1 {
   color: rgb(35, 40, 45);
 }
+.input-fields {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 350px;
+}
+.error-input {
+  color: rgb(197, 19, 19);
+  font-weight: 550;
+}
+.name-input {
+  margin-bottom: 1.8px;
+}
 input {
   height: 30px;
   width: 250px;
   font-size: large;
+  
+}
+input:focus {
+  outline: none;
 }
 
 select {
@@ -44,7 +59,7 @@ select {
 }
 
 .button {
-  width: 150px;
+  width: 130px;
   color: rgba(0, 0, 0, 0.507);
   text-align: center;
   text-decoration: none;
@@ -52,6 +67,12 @@ select {
   font-size: x-large;
   border: 2px solid rgba(0, 0, 0, 0.288);
   border-radius: 3px;
+}
+.join-register-buttons {
+  display: flex;
+  width: 350px;
+  justify-content: space-evenly;
+  margin-bottom: 20px;
 }
 .button:hover {
   cursor: pointer;
@@ -69,16 +90,20 @@ select {
   }
   input {
     font-size: medium;
-    width: 200px;
+    width: 180px !important;
     height: 30px;
   }
   select {
     height: 25px;
-    width: 200px;
+    width: 150px;
     font-size: small;
   }
   .button {
     font-size: large;
     padding: 3px 0;
+    width: 100px;
+  }
+  .join-register-buttons {
+    width: 250px;
   }
 }
