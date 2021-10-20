@@ -45,49 +45,56 @@ function Join({ location }) {
       <div className="greeting">
         <h1>Welcome to ChitChat</h1>
       </div>
-      <div className="nameInput">{error}</div>
-      <div className="nameInput">
-        <input
-          type="text"
-          name="name"
-          id="name"
-          placeholder="Enter your name"
-          onChange={(e) => setName(e.target.value)}
-          required
-        />
+      <div className="input-fields">
+        <div className="error-input">{error}</div>
+        <div className="name-input">
+          <input
+            type="text"
+            name="name"
+            id="name"
+            placeholder="Enter your name"
+            onChange={(e) => setName(e.target.value)}
+            required
+          />
+        </div>
+        <div className="password-input">
+          <input
+            type="password"
+            name="password"
+            id="password"
+            placeholder="Enter your password"
+            onChange={(e) => setPassword(e.target.value)}
+            required
+          />
+        </div>
+        <div className="room-input">
+          <select
+            name="room"
+            id="room"
+            defaultValue={"Javascript"}
+            onChange={(e) => setRoom(e.target.value)}
+          >
+            <option value="Javascript">Javascript</option>
+            <option value="Python">Python</option>
+            <option value="Ruby">Ruby</option>
+          </select>
+        </div>
       </div>
-      <div className="passwordInput">
-        <input
-          type="password"
-          name="password"
-          id="password"
-          placeholder="Enter your password"
-          onChange={(e) => setPassword(e.target.value)}
-          required
-        />
-      </div>
-      <div className="roomInput">
-        <select
-          name="room"
-          id="room"
-          defaultValue={"Javascript"}
-          onChange={(e) => setRoom(e.target.value)}
+      <div className="join-register-buttons">
+        <a
+          className="button"
+          type="submit"
+          onClick={(e) => {
+            signIn(name, password, room, setName, setPassword, setError);
+          }}
         >
-          <option value="Javascript">Javascript</option>
-          <option value="Python">Python</option>
-          <option value="Ruby">Ruby</option>
-        </select>
+          JOIN
+        </a>
+        <a className="button" href="/register">
+          Register
+        </a>
       </div>
-      <a
-        className="button"
-        type="submit"
-        onClick={(e) => {
-          signIn(name, password, room, setName, setPassword, setError);
-        }}
-      >
-        JOIN
-      </a>
-      <a href="/register">Register</a>
+
       <button type="submit" onClick={signInWithGoogle}>
         Sign In with Google
       </button>
