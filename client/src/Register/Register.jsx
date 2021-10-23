@@ -32,9 +32,17 @@ function Register(props) {
             password: password,
             google_login: false,
             id: response.user.uid,
-            my_message: [],
-            other_users: [{ messages: [], user_id: "" }],
-            room: [],
+            messages: [],
+            room: "",
+            // my_message: [],
+            // other_users: [{ messages: [], user_id: "" }],
+            // conversation: [
+            //   {
+            //     roomName: "",
+            //     messages: [],
+            //   },
+            // ],
+            // room: [],
           },
           { merge: true }
         );
