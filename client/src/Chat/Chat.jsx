@@ -3,6 +3,8 @@ import { io } from "socket.io-client";
 import queryString from "query-string";
 import Messages from "../Messages/Messages";
 import { useAuth } from "../Auth/Auth";
+// import { db, doc, updateDoc } from "../firebase";
+// import { arrayUnion } from "@firebase/firestore";
 
 import ChatRoomInfo from "../ChatRoomInfo/ChatRoomInfo";
 
@@ -17,7 +19,7 @@ function Chat({ location }) {
   const [room, setRoom] = useState("");
   const [usersInRoom, setUsersInRoom] = useState([]);
 
-  const { signOut } = useAuth();
+  const { signOut, userUID } = useAuth();
 
   const ENDPOINT = "localhost:5500";
 
@@ -27,8 +29,9 @@ function Chat({ location }) {
     });
     setName(name);
     setRoom(room);
+
     socket = io(ENDPOINT);
-    socket.emit("joinRoom", { name: name, room: room });
+    socket.emit("joinRoom", { name: name, room: room, userUID: userUID });
 
     return () => {
       socket.disconnect();
@@ -40,31 +43,16 @@ function Chat({ location }) {
     socket.on("message", (message) => {
       setMessages([...messages, message]);
     });
-    socket.on("usersInRoom", ({ room, users }) => {
+    socket.on("usersInRoom", ({ users }) => {
       setUsersInRoom(users);
     });
   }, [messages]);
 
-  // useEffect(async () => {
-  //   const documentID = "xmQmBOFfPxKbuUtM5gWc";
-  //   const docReference = doc(db, "users", documentID);
-  //   // console.log(docReference);
-  //   const snapshot = await getDoc(docReference);
-  //   if (snapshot) {
-  //     // console.log(snapshot);
-  //     const data = snapshot.data();
-  //     // console.log(data);
-  //   } else {
-  //     console.log("no doc");
-  //   }
-  //   return function () {
-  //     snapshot = "";
-  //   };
-  // }, []);
-  const sendMessage = (event) => {
+  const sendMessage = async (event) => {
     event.preventDefault();
     if (message) {
-      socket.emit("sendMessage", { message, name });
+      // console.log(userUID);
+      socket.emit("sendMessage", { message, name, userUID });
       setMessage(" ");
     }
   };
@@ -80,7 +68,7 @@ function Chat({ location }) {
       </div>
       <div className="chatContainer">
         <div className="chatMessages">
-          <Messages messages={messages} name={name} />
+          <Messages messages={messages} name={name} users={usersInRoom} />
         </div>
         <div className="input">
           <input
