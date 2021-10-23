@@ -1,10 +1,27 @@
 import React from "react";
 import "./Message.css";
-
+import { useAuth } from "../../Auth/Auth";
+import { doc, db, updateDoc } from "../../firebase";
+import { arrayUnion } from "@firebase/firestore";
 let isFound;
-function Message({ message, user, name }) {
+function Message({ message, user, name, usersInRoom, userUID }) {
   let text = message;
+  const saveMessageToDB = () => {
+    usersInRoom.map(async (user) => {
+      const documentRef = doc(db, "users", user.userUID);
+      await updateDoc(documentRef, {
+        room: "Javascript",
+        messages: arrayUnion({ content: `${message}`, userUID: `${userUID}` }),
+      });
+    });
+  };
   if (user == name) {
+    try {
+      saveMessageToDB();
+    } catch (error) {
+      console.log(error);
+    }
+
     return (
       <div className="messageContainer">
         <div className="whiteBg">
@@ -28,6 +45,12 @@ function Message({ message, user, name }) {
       </div>
     );
   } else {
+    // console.log(userUID);
+    try {
+      saveMessageToDB();
+    } catch (error) {
+      console.log(error);
+    }
     return (
       <div className="messageContainer">
         <div className="blueBg">
