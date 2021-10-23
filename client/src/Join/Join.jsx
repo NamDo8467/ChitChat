@@ -7,6 +7,7 @@ function Join({ location }) {
   const [name, setName] = useState("");
   const [room, setRoom] = useState("Javascript");
   const [error, setError] = useState("");
+  
   const [password, setPassword] = useState("");
   // const { currentUser, signInWithGoogle} = useContext(AuthContext)
   const { currentUser, signInWithGoogle, signIn } = useAuth();
