@@ -17,6 +17,7 @@ export const useAuth = () => useContext(AuthContext);
 
 export function AuthProvider(props) {
   const [currentUser, setCurrentUser] = useState(null);
+  const [userUID, setUserUID] = useState(null);
 
   const signInWithGoogle = async () => {
     await signInWithPopup(auth, googleProvider);
@@ -30,10 +31,12 @@ export function AuthProvider(props) {
       setName("");
       setPassword("");
       setCurrentUser(response.user.email);
-      const documentRef = doc(db, "users", response.user.uid)
-      await updateDoc(documentRef, {
-        room: arrayUnion(room)
-      })
+      setUserUID(response.user.uid);
+      // console.log(userUID);
+      // const documentRef = doc(db, "users", response.user.uid)
+      // await updateDoc(documentRef, {
+      //   room: arrayUnion(room)
+      // })
       
     } catch (error) {
       console.log(error.message);
@@ -60,7 +63,7 @@ export function AuthProvider(props) {
   //     unsubscribe();
   //   };
   // }, [currentUser]);
-  const value = { currentUser, signInWithGoogle, signIn, signOut };
+  const value = { currentUser, userUID, signInWithGoogle, signIn, signOut };
   return (
     <AuthContext.Provider value={value}>{props.children}</AuthContext.Provider>
   );
