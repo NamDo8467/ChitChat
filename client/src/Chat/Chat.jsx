@@ -3,7 +3,7 @@ import { io } from "socket.io-client";
 import queryString from "query-string";
 import Messages from "../Messages/Messages";
 import { useAuth } from "../Auth/Auth";
-// import { db, doc, updateDoc } from "../firebase";
+import { db, doc, getDoc } from "../firebase";
 // import { arrayUnion } from "@firebase/firestore";
 
 import ChatRoomInfo from "../ChatRoomInfo/ChatRoomInfo";
@@ -32,7 +32,7 @@ function Chat({ location }) {
 
     socket = io(ENDPOINT);
     socket.emit("joinRoom", { name: name, room: room, userUID: userUID });
-
+    loadMessagesFromDatabase();
     return () => {
       socket.disconnect();
       socket.off();
@@ -48,10 +48,16 @@ function Chat({ location }) {
     });
   }, [messages]);
 
+  async function loadMessagesFromDatabase() {
+    const docRef = doc(db, "users", userUID);
+    const docSnap = await getDoc(docRef);
+    const messagesFromDatabase = docSnap.data().messages;
+    setMessages([...messagesFromDatabase]);
+  }
+
   const sendMessage = async (event) => {
     event.preventDefault();
     if (message) {
-      // console.log(userUID);
       socket.emit("sendMessage", { message, name, userUID });
       setMessage(" ");
     }
