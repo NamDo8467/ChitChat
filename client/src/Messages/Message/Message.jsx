@@ -7,11 +7,11 @@ let isFound;
 function Message({ message, user, name, usersInRoom, userUID }) {
   let text = message;
   const saveMessageToDB = () => {
-    usersInRoom.map(async (user) => {
-      const documentRef = doc(db, "users", user.userUID);
+    usersInRoom.map(async (eachUser) => {
+      const documentRef = doc(db, "users", eachUser.userUID);
       await updateDoc(documentRef, {
         room: "Javascript",
-        messages: arrayUnion({ content: `${message}`, userUID: `${userUID}` }),
+        messages: arrayUnion({ user:`${user}`, text: `${message}`, userUID: `${userUID}` }),
       });
     });
   };
